@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,6 +25,9 @@ namespace Pong
 
         //Liste des balles
         private List<Ball> balls = new List<Ball>();
+
+        //Polices d'écriture
+        private SpriteFont font;
 
         public Main()
         {
@@ -62,6 +66,8 @@ namespace Pong
 
             Ball ball = new Ball(ballTexture, new Vector2(width / 2 - 29, height / 2 - 29), new Vector2(5, 5), 29, 29);
             balls.Add(ball);
+
+            font = Content.Load<SpriteFont>("NewFont");
         }
 
         protected override void Update(GameTime gameTime)
@@ -86,7 +92,7 @@ namespace Pong
             for (int i = 0; i < balls.Count; i++)
             {
                 balls[i].Move();
-                balls[i].Collision(width, height);
+                balls[i].Collision(width, height,players);
                 
             }
 
@@ -123,7 +129,10 @@ namespace Pong
             {
                 balls[i].Draw(spriteBatch);
             }
-           
+
+            //Scores
+            spriteBatch.DrawString(font, Convert.ToString(players[0].GetScore()), new Vector2(770, 20), Color.White);
+            spriteBatch.DrawString(font, Convert.ToString(players[1].GetScore()), new Vector2(10, 20), Color.White);
 
             spriteBatch.End();
 

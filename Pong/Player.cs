@@ -23,6 +23,9 @@ namespace Pong
         private int width;
         private int height;
 
+        //Score des joueurs
+        int score;
+
         public Player(Texture2D texture, Vector2 position, int speed, int width, int height)
         {
             this.texture = texture;
@@ -95,6 +98,16 @@ namespace Pong
         public int GetHeight()
         {
             return height;
+        }
+
+        public void SetScore(int score)
+        {
+            this.score += score;
+        }
+
+        public int GetScore()
+        {
+            return score;
         }
     }
 }

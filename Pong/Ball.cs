@@ -22,6 +22,7 @@ namespace Pong
         int width;
         int height;
 
+
         public Ball(Texture2D texture, Vector2 position, Vector2 speed, int width, int height)
         {
             this.texture = texture;
@@ -44,7 +45,7 @@ namespace Pong
             position.Y = newPosition.Y;
         }
 
-        public void Collision(int widthWindow, int heightWindow)
+        public void Collision(int widthWindow, int heightWindow, List<Player> players)
         {
             //Murs
             int left = 0;
@@ -60,7 +61,8 @@ namespace Pong
             else if (position.X >= right)
             {
                 speed.X *= -1;
-                speed.Y *= 1;
+                players[1].SetScore(1);
+
             }
             else if (position.Y <= top)
             {
@@ -69,6 +71,7 @@ namespace Pong
             else if (position.X <= left)
             {
                 speed.X *= -1;
+                players[0].SetScore(1);
 
             }
 
@@ -95,5 +98,7 @@ namespace Pong
                 speed.X *= -1;
             }
         }
+
+    
     }
 }
