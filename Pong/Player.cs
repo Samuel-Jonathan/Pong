@@ -14,24 +14,22 @@ namespace Pong
         private Texture2D texture;
 
         //Position du joueur
-        private int x;
-        private int y;
+        private Vector2 position;
 
         //Vitesse
         private int speed;
 
-        public Player(Texture2D texture, int x, int y, int speed)
+        public Player(Texture2D texture, Vector2 position, int speed)
         {
             this.texture = texture;
-            this.x = x;
-            this.y = y;
+            this.position = position;
             this.speed = speed;
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Vector2(x, y), Color.White);
+            spriteBatch.Draw(texture, new Vector2(position.X, position.Y), Color.White);
         }
 
         public void MoveLeft()
@@ -39,10 +37,11 @@ namespace Pong
             //Déplacement du joueur (gauche)
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                y -= speed;
-            }else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                position.Y -= speed;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                y += speed;
+                position.Y += speed;
             }
         }
 
@@ -51,28 +50,29 @@ namespace Pong
             //Déplacement du joueur (droit)
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                y -= speed;
+                position.Y -= speed;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                y += speed;
+                position.Y += speed;
             }
         }
 
         public void Collision()
         {
 
-            //Coordonnées du haut et bas de la fenêtre
+            //Murs
             int top = 0;
             int bottom = 472;
 
             //Collision du joueur
-            if(y <= top)
+            if (position.Y <= top)
             {
-                y += speed;
-            }else if(y >= bottom)
+                position.Y += speed;
+            }
+            else if (position.Y >= bottom)
             {
-                y -= speed;
+                position.Y -= speed;
             }
         }
     }
