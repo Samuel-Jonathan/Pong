@@ -54,19 +54,21 @@ namespace Pong
             ballTexture = Content.Load<Texture2D>("ball");
 
             //Joueurs
-            Player playerLeft = new Player(playerTexture, new Vector2(40, height / 2), 5);
+            Player playerLeft = new Player(playerTexture, new Vector2(40, height / 2), 5, 20,128);
             players.Add(playerLeft);
 
-            Player playerRight = new Player(playerTexture, new Vector2(760, height / 2), 5);
+            Player playerRight = new Player(playerTexture, new Vector2(760, height / 2), 5, 20, 128);
             players.Add(playerRight);
 
             Ball ball = new Ball(ballTexture, new Vector2(width / 2 - 29, height / 2 - 29), new Vector2(5, 5), 29, 29);
             balls.Add(ball);
-
         }
 
         protected override void Update(GameTime gameTime)
         {
+
+            Player playerLeft = players[0];
+            Player playerRight = players[1];
 
             //Collisions pour les joueurs
             for (int i = 0; i < players.Count; i++)
@@ -75,18 +77,30 @@ namespace Pong
             }
 
             //Mouvements des joueurs
-            players[0].MoveLeft();
-            players[1].MoveRight();
+            playerLeft.MoveLeft();
+            playerRight.MoveRight();
 
-            //Mouvements de la balle
-            balls[0].Move();
+            
 
-            //Collisions de la balle sur les murs
+            //Collisions de la balle sur les murs et mouvements de la balle
             for (int i = 0; i < balls.Count; i++)
             {
+                balls[i].Move();
                 balls[i].Collision(width, height);
+                
             }
 
+            //Collisions de la balle avec les joueurs
+            for (int i = 0; i < balls.Count; i++)
+            {
+                balls[i].CollisionWithPlayerLeft(playerLeft.GetPosition(),
+                             playerLeft.GetWidth(), playerLeft.GetHeight());
+
+                balls[i].CollisionWithPlayerRight(playerRight.GetPosition(),
+                    playerRight.GetWidth(), playerRight.GetHeight());
+
+
+            }
 
             base.Update(gameTime);
         }
@@ -105,7 +119,11 @@ namespace Pong
             }
 
             //Dessine la balle
-            balls[0].Draw(spriteBatch);
+            for(int i = 0; i < balls.Count; i++)
+            {
+                balls[i].Draw(spriteBatch);
+            }
+           
 
             spriteBatch.End();
 

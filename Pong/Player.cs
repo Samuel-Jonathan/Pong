@@ -19,17 +19,23 @@ namespace Pong
         //Vitesse
         private int speed;
 
-        public Player(Texture2D texture, Vector2 position, int speed)
+        //Dimension de la texture
+        private int width;
+        private int height;
+
+        public Player(Texture2D texture, Vector2 position, int speed, int width, int height)
         {
             this.texture = texture;
             this.position = position;
             this.speed = speed;
+            this.width = width;
+            this.height = height;
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Vector2(position.X, position.Y), Color.White);
+            spriteBatch.Draw(texture, position, Color.White);
         }
 
         public void MoveLeft()
@@ -74,6 +80,21 @@ namespace Pong
             {
                 position.Y -= speed;
             }
+        }
+
+        public Vector2 GetPosition()
+        {
+            return position;
+        }
+
+        public int GetWidth()
+        {
+            return width;
+        }
+
+        public int GetHeight()
+        {
+            return height;
         }
     }
 }

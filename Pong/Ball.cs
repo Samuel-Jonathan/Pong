@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Pong
 {
@@ -54,7 +55,6 @@ namespace Pong
             //Collision 
             if (position.Y >= bottom)
             {
-
                 speed.Y *= -1;
             }
             else if (position.X >= right)
@@ -72,6 +72,28 @@ namespace Pong
 
             }
 
+        }
+
+        public void CollisionWithPlayerLeft(Vector2 positionPlayer, int widthPlayer, int heightPlayer)
+        {
+            //Collision de la balle avec le joueur à gauche
+            if (position.X <= positionPlayer.X + widthPlayer &&
+                position.Y + height >= positionPlayer.Y &&
+                position.Y <= positionPlayer.Y + heightPlayer)
+            {
+                speed.X *= -1;
+            }
+        }
+
+        public void CollisionWithPlayerRight(Vector2 positionPlayer, int widthPlayer, int heightPlayer)
+        {
+            //Collision de la balle avec le joueur à droite
+            if (position.X >= positionPlayer.X - width &&
+                position.Y + height >= positionPlayer.Y &&
+                position.Y <= positionPlayer.Y + heightPlayer)
+            {
+                speed.X *= -1;
+            }
         }
     }
 }
