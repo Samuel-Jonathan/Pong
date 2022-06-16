@@ -61,7 +61,7 @@ namespace Pong
             else if (position.X >= right)
             {
                 speed.X *= -1;
-                players[1].SetScore(1);
+                players[0].SetScore(1);
 
             }
             else if (position.Y <= top)
@@ -71,7 +71,7 @@ namespace Pong
             else if (position.X <= left)
             {
                 speed.X *= -1;
-                players[0].SetScore(1);
+                players[1].SetScore(1);
 
             }
 

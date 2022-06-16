@@ -29,6 +29,9 @@ namespace Pong
         //Polices d'écriture
         private SpriteFont font;
 
+        //Score à atteindre
+        private const int SCORE_MAX = 1;
+
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -104,8 +107,16 @@ namespace Pong
 
                 balls[i].CollisionWithPlayerRight(playerRight.GetPosition(),
                     playerRight.GetWidth(), playerRight.GetHeight());
+            }
 
+            if(playerLeft.GetScore() == SCORE_MAX || 
+                playerRight.GetScore() == SCORE_MAX)
+            {
+                backgroundTexture.Dispose();
+                ballTexture.Dispose();
+                playerTexture.Dispose();
 
+                GraphicsDevice.Clear(Color.Black);
             }
 
             base.Update(gameTime);
@@ -130,10 +141,20 @@ namespace Pong
                 balls[i].Draw(spriteBatch);
             }
 
-            //Scores
-            spriteBatch.DrawString(font, Convert.ToString(players[0].GetScore()), new Vector2(770, 20), Color.White);
-            spriteBatch.DrawString(font, Convert.ToString(players[1].GetScore()), new Vector2(10, 20), Color.White);
-
+            if (players[0].GetScore() != SCORE_MAX & players[1].GetScore() != SCORE_MAX
+              )
+            {
+                //Scores
+                spriteBatch.DrawString(font, Convert.ToString(players[1].GetScore()), new Vector2(770, 20), Color.White);
+                spriteBatch.DrawString(font, Convert.ToString(players[0].GetScore()), new Vector2(10, 20), Color.White);
+            }
+            else
+            {
+             
+                //Victoire
+                spriteBatch.DrawString(font, "Félicitation", new Vector2(width/2 - 180, height/2 - 30), Color.White,0.0f,Vector2.Zero,
+                    2.0f,SpriteEffects.None,0.0f);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
